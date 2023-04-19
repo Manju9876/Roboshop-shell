@@ -7,13 +7,12 @@ yum install nodejs -y
 echo -e "\e[32m>>>>>>>>>>>>>> crate a user  <<<<<<<<<<<<<<<<<<<\e[0m"
 useradd roboshop
 
-echo -e "\e[32m>>>>>>>>>>>>>> creating a directory /app <<<<<<<<<<<<<<<<<<<\e[0m"
+echo -e "\e[32m>>>>>>>>>>>>>> crate app directory <<<<<<<<<<<<<<<<<<<\e[0m"
+rm -rf /app
 mkdir /app
 
 echo -e "\e[32m>>>>>>>>>>>>>> downloading and unziping the content tp /app directory <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
-rm -rf /app
-mkdir /app
 cd /app
 unzip /tmp/user.zip
 
