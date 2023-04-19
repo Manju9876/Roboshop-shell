@@ -9,7 +9,7 @@ echo -e "\e[32m>>>>>>>>>>>>>>>>>>>>>>>>>>> installing the redis software <<<<<<<
 yum install redis -y
 
 echo -e "\e[32m>>>>>>>>>>>>>>>>>>>>>>>>>>> replacing the IP address to listen to 0.0.0.0 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-sed -i -re 's|127.0.0.1|0.0.0.0|' /etc/redis.conf /etc/redis/redis.conf
+sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/redis.conf /etc/redis/redis.conf
 
 echo -e "\e[32m>>>>>>>>>>>>>>>>>>>>>>>>>>> starting and enabling the redis service <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl enable redis
