@@ -7,3 +7,4 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf
 systemctl restart nginx
+systemctl status nginx
