@@ -35,4 +35,4 @@ echo -e "\e[32m>>>>>>>>>>>>>> installing the mongodb client<<<<<<<<<<<<<<<<<<<\e
 yum install mongodb-org-shell -y
 
 echo -e "\e[32m>>>>>>>>>>>>>> loading the schema to mongoddb server <<<<<<<<<<<<<<<<<<<\e[0m"
-mongo --mongodb-dev.manju-devops.online </app/schema/user.js
+mongo --host mongodb-dev.manju-devops.online </app/schema/user.js
