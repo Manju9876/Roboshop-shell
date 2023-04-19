@@ -12,6 +12,8 @@ mkdir /app
 
 echo -e "\e[32m>>>>>>>>>>>>>> downloading and unziping the content tp /app directory <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
+rm -rf /app
+mkdir /app
 cd /app
 unzip /tmp/user.zip
 
