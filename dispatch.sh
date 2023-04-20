@@ -6,6 +6,7 @@ echo -e "\e[36m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create user <<<<<<<<<<<<<<<<<
 useradd roboshop
 
 echo -e "\e[36m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create a directory <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+rm -rf /app
 mkdir /app
 
 echo -e "\e[36m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> download the code content  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
