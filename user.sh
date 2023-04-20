@@ -20,7 +20,7 @@ echo -e "\e[32m>>>>>>>>>>>>>> installing the dependencies  <<<<<<<<<<<<<<<<<<<\e
 npm install
 
 echo -e "\e[32m>>>>>>>>>>>>>> copying the configuration file to systemd <<<<<<<<<<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/user.service /etc/systemc/system/user.service
+cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service
 
 echo -e "\e[32m>>>>>>>>>>>>>> reloading the schema <<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl daemon-reload
