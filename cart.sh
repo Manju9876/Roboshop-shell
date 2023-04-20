@@ -1,3 +1,5 @@
+
+
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
@@ -26,5 +28,8 @@ echo -e "\e[32m>>>>>>>>>>>>>> reloading the schema <<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl daemon-reload
 
 echo -e "\e[32m>>>>>>>>>>>>>> starting and enabling the schema <<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable user
-systemctl start user
+systemctl enable cart
+systemctl start cart
+
+echo -e "\e[32m>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> checking the status of cart service <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+systemctl status cart
