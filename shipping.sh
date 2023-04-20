@@ -1,9 +1,10 @@
+source common.sh
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> installing maven <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 yum install maven -y
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> creating a user <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-useradd roboshop
+useradd ${app_user}
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> creating a directory /app <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 mkdir /app

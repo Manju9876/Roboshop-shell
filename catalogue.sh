@@ -1,3 +1,5 @@
+source common.sh
+
 echo -e "\e[32m>>>>>>>>>>>>>> configuration of node js<<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
@@ -9,7 +11,7 @@ systemctl start catalogue
 systemctl enable catalogue
 
 echo -e "\e[32m>>>>>>>>>>>>>> creating a user <<<<<<<<<<<<<<<<<<<\e[0m"
-useradd roboshop
+useradd ${app_user}
 
 echo -e "\e[32m>>>>>>>>>>>>>> creating a directory <<<<<<<<<<<<<<<<<<<\e[0m"
 rm -rf /app

@@ -1,4 +1,4 @@
-
+source common.sh
 
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
@@ -7,7 +7,7 @@ echo -e "\e[32m>>>>>>>>>>>>>> install node js  <<<<<<<<<<<<<<<<<<<\e[0m"
 yum install nodejs -y
 
 echo -e "\e[32m>>>>>>>>>>>>>> crate a user  <<<<<<<<<<<<<<<<<<<\e[0m"
-useradd roboshop
+useradd ${app-user}
 
 echo -e "\e[32m>>>>>>>>>>>>>> crate app directory <<<<<<<<<<<<<<<<<<<\e[0m"
 rm -rf /app
