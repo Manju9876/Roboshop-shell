@@ -1,6 +1,7 @@
 script_path=$(dirname $0)
 
 source ${script_path}/common.sh
+echo ${app_user}
 exit
 
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
