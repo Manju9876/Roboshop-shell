@@ -1,6 +1,6 @@
+script_path=$(dirname $0)
 
-source common.sh
-pwd
+source ${script_path}/common.sh
 exit
 
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
