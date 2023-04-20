@@ -21,7 +21,7 @@ go get
 go build
 
 echo -e "\e[36m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> copy the serice file to systemd <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop/dispatch.service /etc/systemd/system/dispatch.service
+cp /home/centos/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service
 
 echo -e "\e[36m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> relaod the systemd  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl daemon-reload
