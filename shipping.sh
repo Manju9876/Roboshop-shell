@@ -1,7 +1,8 @@
 
-script_path=$(dirname $0)
+script=$(realpath "$0")
+script_path=$(dirname "$script")
 source ${script_path}/common.sh
-exit
+mysql_root_password=$1
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> installing maven <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 yum install maven -y
@@ -26,7 +27,7 @@ mvn clean package
 mv target/shipping-1.0.jar shipping.jar
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> copying the configuration file to systemd <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp  ${script_path}/shipping.service /etc/systemd/system/shipping.service
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> reloading the systemd<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl daemon-reload
@@ -39,7 +40,7 @@ echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> installing the mysql <<<<<<<<<<<<<<
 yum install mysql -y
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> loading the schema  to myql DNS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql -h mysql-dev.manju-devops.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
+mysql -h mysql-dev.manju-devops.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> restarting and cheking the status of shipping <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl restart shipping

@@ -1,10 +1,13 @@
+script=$(realpath "$0")
+script_path=$(dirname "$script")
+source ${script_path}/common.sh
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installing mysql <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> diableing the mysql default version <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 dnf module disable mysql -y
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> copying the repo file  <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/mysql.repo /etc/yum.repos.d/mysql.repo
+cp  ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installign the mysql community verison <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 yum install mysql-community-server -y

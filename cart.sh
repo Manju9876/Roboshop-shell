@@ -3,9 +3,6 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
-echo script_path is ${script}
-exit
-
 
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
