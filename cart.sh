@@ -1,14 +1,11 @@
 script=$(realpath "$0")
 script_path=$(dirname "script")
 source ${script_path}/common.sh
+conf_path=/home/centos/roboshop-shell
 
-
-echo this the script_path file ${script_path "0"}
+echo congiguration path is ${conf_path}
 
 exit
-
-
-
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
