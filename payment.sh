@@ -10,6 +10,7 @@ echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create a user <<<<<<<<<<<<<<<<<<<
 useradd ${app_user}
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create a directory <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+rm -rf /app
 mkdir /app
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> download the code content <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
