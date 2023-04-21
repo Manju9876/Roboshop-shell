@@ -57,5 +57,5 @@ systemctl start ${component}
 
 print_head "checking the status of cart service "
 systemctl status ${component}
-
+schema_setup
 }
