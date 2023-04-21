@@ -3,39 +3,44 @@ app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 
+print_head(){
+  echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m"
+}
+
 func_nodejs() {
-echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
+
+print_head "download the repo file"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-echo -e "\e[32m>>>>>>>>>>>>>> install node js  <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "install node js "
 yum install nodejs -y
 
-echo -e "\e[32m>>>>>>>>>>>>>> crate a user  <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "crate a user "
 useradd ${app_user}
 
-echo -e "\e[32m>>>>>>>>>>>>>> crate app directory <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "crate app directory"
 rm -rf /app
 mkdir /app
 
-echo -e "\e[32m>>>>>>>>>>>>>> downloading and unzipping the content tp /app directory <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "downloading and unzipping the content tp /app directory"
 curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
 cd /app
 unzip /tmp/${component}.zip
 
-echo -e "\e[32m>>>>>>>>>>>>>> installing the dependencies  <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "installing the dependencies"
 npm install
 
-echo -e "\e[32m>>>>>>>>>>>>>> copying the configuration file to systemd <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "copying the configuration file to systemd"
 cp  ${script_path}/${component}.service /etc/systemd/system/${component}.service
 
-echo -e "\e[32m>>>>>>>>>>>>>> reloading the schema <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "reloading the schema"
 systemctl daemon-reload
 
-echo -e "\e[32m>>>>>>>>>>>>>> starting and enabling the schema <<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "starting and enabling the schema"
 systemctl enable ${component}
 systemctl start ${component}
 
-echo -e "\e[32m>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> checking the status of cart service <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+print_head "checking the status of cart service "
 systemctl status ${component}
 
 }
