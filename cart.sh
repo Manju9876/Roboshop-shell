@@ -1,5 +1,5 @@
 script=$(realpath "$0")
-script_path=$/home/centos/roboshop-shell "script"
+script_path=$(/home/centos/roboshop-shell "script")
 source ${script_path}/common.sh
 conf_path=/home/centos/roboshop-shell
 
