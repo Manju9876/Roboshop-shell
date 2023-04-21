@@ -3,7 +3,7 @@ script_path=$(dirname "script")
 source ${script_path}/common.sh
 
 
-echo this the script_path file $(realpath "$0")
+echo this the script_path file ${script_path "0"}
 
 exit
 
