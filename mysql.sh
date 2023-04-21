@@ -1,7 +1,13 @@
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
+mysql_root_password=$1
 
+if [ -z "$mysql_root_password" ]
+then
+  echo input missing to mysql root password
+  exit
+fi
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installing mysql <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> diableing the mysql default version <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 dnf module disable mysql -y
@@ -17,7 +23,7 @@ systemctl enable mysqld
 systemctl start mysqld
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>>reset  mysql passwd <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass ${mysql_root_password}
 
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> checking the new passwd is working are not  <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql -uroot -pRoboShop@1
+mysql -uroot -p${mysql_root_password}
