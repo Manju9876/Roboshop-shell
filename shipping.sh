@@ -11,6 +11,7 @@ echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> creating a user <<<<<<<<<<<<<<<<<<<
 useradd ${app_user}
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> creating a directory /app <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+rm -rf /app
 mkdir /app
 
 echo -e "\e[34m >>>>>>>>>>>>>>>>>>>>>>>>>>>> Downloading the application code <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
