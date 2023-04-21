@@ -3,9 +3,7 @@ script_path=$(dirname "script")
 source ${script_path}/common.sh
 conf_path=/home/centos/roboshop-shell
 
-echo congiguration path is ${conf_path}
 
-exit
 echo -e "\e[32m>>>>>>>>>>>>>> download the repo file  <<<<<<<<<<<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
@@ -28,7 +26,7 @@ echo -e "\e[32m>>>>>>>>>>>>>> installing the dependencies  <<<<<<<<<<<<<<<<<<<\e
 npm install
 
 echo -e "\e[32m>>>>>>>>>>>>>> copying the configuration file to systemd <<<<<<<<<<<<<<<<<<<\e[0m"
-cp  ${script_path}/cart.service /etc/systemd/system/cart.service
+cp  ${conf_path}/cart.service /etc/systemd/system/cart.service
 
 echo -e "\e[32m>>>>>>>>>>>>>> reloading the schema <<<<<<<<<<<<<<<<<<<\e[0m"
 systemctl daemon-reload
