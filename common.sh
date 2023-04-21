@@ -7,6 +7,21 @@ print_head(){
   echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m"
 }
 
+schema_setup(){
+if [ "$schema_setup" == mongo ]
+then
+  print_head "copying the repo file of mongodb to yum.repos.d "
+  cp  ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+
+  print_head "installing the mongodb client"
+  yum install mongodb-org-shell -y
+
+  print_head "loading the schema to mongodb server "
+  mongo --host mongodb-dev.manju-devops.online </app/schema/user.js
+  fi
+}
+
+
 func_nodejs() {
 
 print_head "download the repo file"
