@@ -68,7 +68,7 @@ func_app_prereq(){
     func_stat_check $?
 
     func_print_head "Downloading the application code "
-     curl -L -o /tmp/${componet}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
+     curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
     func_stat_check $?
 
     func_print_head "unzipping the code content in /app"
