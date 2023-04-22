@@ -12,7 +12,7 @@ service_start="mongodb"
 
 func_print_head "updating the mongod.conf file to 0.0.0.0"
    sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf &>>${log_file}
-   func_stat_check
+   func_stat_check $?
 
 func_print_head "start service of mongodb"
 systemctl enable mongod &>>${log_file}
