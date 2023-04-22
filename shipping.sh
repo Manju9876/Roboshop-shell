@@ -6,7 +6,7 @@ mysql_root_password=$1
 
 if [ -z "$mysql_root_password" ]
 then
-  echo -s  "\e[36m Please enter Mysql Root Password \e[0m"
+  echo -e  "\e[36m Please enter Mysql Root Password \e[0m"
   exit
 fi
 
