@@ -2,28 +2,31 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>installing nginx<<<<<<<<<<<<<<<<<<<<\e[0m"
-yum install nginx -y
 
-echo -e "\e[31m>>>>>>>>>>>>>> starting and enabling the nginx service <<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable nginx
-systemctl start nginx
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>remving the existing content in nginx<<<<<<<<<<<<<<<<<<<<\e[0m"
-rm -rf /usr/share/nginx/html/*
+func_print_head "installing nginx"
+yum install nginx -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>downloadig the  application code <<<<<<<<<<<<<<<<<<<<\e[0m"
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
+func_print_head "copying the service file to systemd"
+cp  ${script_path}/roboshop.conf /etc/nginx/default.d/roboshop.conf &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>changing the directory and unzip the downloaded code <<<<<<<<<<<<<<<<<<<<\e[0m"
-cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+func_print_head "removing the old files"
+rm -rf /usr/share/nginx/html/* &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>copying the congiguration file<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp  ${script_path}/roboshop.conf /etc/nginx/default.d/roboshop.conf
+func_print_head "downloading the application code"
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>restarting the nginx<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl restart nginx
+func_print_head "unziping the content"
+cd /usr/share/nginx/html &>>${log_file}
+unzip /tmp/frontend.zip &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>checking the status of nginx service <<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl status nginx
+func_print_head "restaring the nginx and checking the status"
+systemctl enable nginx &>>${log_file}
+systemctl restart nginx &>>${log_file}
+systemctl status nginx &>>${log_file}
+func_stat_check $?
