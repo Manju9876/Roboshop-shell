@@ -34,7 +34,7 @@ if [ "$schema_setup" == "mongo" ]
    func_stat_check $?
 
    func_print_head "loading the schema to mongodb server "
-   mongo --host mongodb-dev.manju-devops.online </app/schema/user.js &>>${log_file}
+   mongo --host mongodb-dev.manju-devops.online </app/schema/${component}.js  &>>${log_file}
    func_stat_check $?
 fi
 
@@ -109,6 +109,7 @@ func_nodejs() {
 
  func_print_head "installing the dependencies"
  npm install &>>${log_file}
+ func_stat_check $?
 
  func_schema_setup
  func_systemd_setup
