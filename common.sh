@@ -1,12 +1,14 @@
 app_user=roboshop
-
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 log_file=/tmp/roboshop.log
-
+#rm -f /tmp/roboshop.log
+                              # this functions prints the heading of each command
 func_print_head(){
   echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m"
 }
+
+                          # This command  checks the staus of  each command Success/Failure
 func_stat_check(){
         if [ "$1" -eq 0 ]
               then
@@ -51,34 +53,26 @@ fi
 func_app_prereq(){
 
     func_print_head "creating a user "
-    useradd ${app_user} &>>${log_file}
+     id ${app_user} &>>${log_file}
+     if [ $? -ne 0 ]
+      then
+        useradd ${app_user} &>>${log_file}
+     fi
+    func_stat_check $?
 
-     # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-      func_stat_check $?
-     # end of the function
+    func_print_head "creating a directory /app "
+     rm -rf /app &>>${log_file}
+     mkdir /app  &>>${log_file}
+    func_stat_check $?
 
-   func_print_head "creating a directory /app "
-    rm -rf /app &>>${log_file}
-    mkdir /app  &>>${log_file}
+    func_print_head "Downloading the application code "
+     curl -L -o /tmp/${componet}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
+    func_stat_check $?
 
-     # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-      func_stat_check $?
-     # end of the function
-
-   func_print_head "Downloading the application code "
-    curl -L -o /tmp/${componet}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
-
-     # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-      func_stat_check $?
-     # end of the function
-
-   func_print_head "unzipping the code content in /app"
-   cd /app
-    unzip /tmp/${component}.zip &>>${log_file}
-
-      # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-        func_stat_check $?
-      # end of the function
+    func_print_head "unzipping the code content in /app"
+     cd /app
+     unzip /tmp/${component}.zip &>>${log_file}
+     func_stat_check $?
 
 }
 
@@ -86,11 +80,8 @@ func_systemd_setup(){
 
   func_print_head "copying the configuration file to systemd"
   cp  ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
-
-      # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-         func_stat_check $?
-      # end of the function
-
+  func_stat_check $?
+      
   func_print_head "reloading the schema"
   systemctl daemon-reload &>>${log_file}
 
@@ -98,10 +89,7 @@ func_systemd_setup(){
   systemctl enable ${component} &>>${log_file}
   systemctl restart ${component} &>>${log_file}
   systemctl status ${component} &>>${log_file}
-
-    # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-       func_stat_check $?
-    # end of the function
+  func_stat_check $?
 
 }
 
@@ -111,32 +99,19 @@ func_nodejs() {
 
  func_print_head "Downloading the nodejs js repo file"
  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+ func_stat_check $?
 
-    # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-        func_stat_check $?
-    # end of the function
+ func_print_head "Install NodeJS"
+ yum install nodejs -y &>>${log_file}
+ func_stat_check $?
 
- func_app_prereq "install node js"
-  yum install nodejs -y &>>${log_file}
-
-    # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-     func_stat_check $?
-    # end of the function
-
-    # calling a function  func_app_prereq
-     func_app_prereq
-    # end of the function
+ func_app_prereq
 
  func_print_head "installing the dependencies"
-  npm install &>>${log_file}
+ npm install &>>${log_file}
 
-  # calling the schema_setup
-  func_schema_setup
-    #end of the function
-
-  # calling the systemd configurations function
+ func_schema_setup
  func_systemd_setup
-   # end of the function
 
 }
 
@@ -148,29 +123,17 @@ func_java(){
   func_print_head "install maven "
   yum install maven -y &>>${log_file}
 
-   # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-    func_stat_check $?
-   # end of the function
+  func_stat_check $?
+  func_app_prereq
 
-   # calling a function  func_app_prereq
-    func_app_prereq
-   # end of the function
+  func_print_head "downloading the dependincies"
+  mvn clean package &>>${log_file}
+  func_stat_check $?
 
-   func_print_head "downloading the dependincies"
-     mvn clean package &>>${log_file}
+  mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
 
-   # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
-    func_stat_check $?
-   # end of the function
-
-     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
-
-   # callinf the schema setup function
-    func_schema_setup
-   # end of the function
-
-   # calling the systemd configurations function
-    func_systemd_setup
-   # end of the function
+  func_schema_setup
+  func_systemd_setup
+  
 
 }
