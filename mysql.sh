@@ -26,6 +26,6 @@ systemctl enable mysqld &>>${log_file}
 systemctl restart mysqld &>>${log_file}
 func_stat_check $?
 
-func_print_head "resting the password"
+func_print_head "re-setting the password"
 mysql_secure_installation --set-root-pass ${mysql_root_password} &>>${log_file}
 func_stat_check $?
