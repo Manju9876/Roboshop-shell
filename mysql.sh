@@ -5,7 +5,7 @@ mysql_root_password=$1
 
 if [ -z "$mysql_root_password" ]
 then
-  echo input missing to mysql root password
+  echo  -e "\e[34m please enter the root password \e[0m"
   exit
 fi
 echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installing mysql <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
