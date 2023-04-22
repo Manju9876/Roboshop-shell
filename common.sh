@@ -50,7 +50,7 @@ fi
 func_app_prereq(){
 
     func_print_head "creating a user "
-    useradd ${app_user} &>/tmp/roboshop.log
+    useradd ${app_user} &>>/tmp/roboshop.log
 
      # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
       func_stat_check $?
@@ -116,7 +116,7 @@ func_nodejs() {
     # end of the function
 
  func_app_prereq "install node js"
-  yum install nodejs -y >/tmp/roboshop.log
+  yum install nodejs -y &>>/tmp/roboshop.log
 
     # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
      func_stat_check $?
@@ -145,7 +145,7 @@ func_nodejs() {
 func_java(){
 
   func_print_head "install maven "
-  yum install maven -y >/tmp/roboshop.log
+  yum install maven -y &>>/tmp/roboshop.log
 
    # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
     func_stat_check $?
