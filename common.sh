@@ -85,6 +85,7 @@ func_systemd_setup(){
       
   func_print_head "reloading the schema"
   systemctl daemon-reload &>>${log_file}
+  func_stat_check $?
 
   func_print_head "starting and enabling the schema checking  the status of the service "
   systemctl enable ${component} &>>${log_file}
