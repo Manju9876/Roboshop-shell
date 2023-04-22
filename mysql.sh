@@ -5,25 +5,31 @@ mysql_root_password=$1
 
 if [ -z "$mysql_root_password" ]
 then
-  echo  -e "\e[34m please enter the root password \e[0m"
+  echo  -e "\e[36m please enter the root password \e[0m"
   exit
 fi
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installing mysql <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> diableing the mysql default version <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-dnf module disable mysql -y
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> copying the repo file  <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp  ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo
+func_print_head "disabling the default mysql version"
+dnf module disable mysql -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> installign the mysql community verison <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-yum install mysql-community-server -y
+func_print_head "copying the repo file"
+cp  ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> enabling and starting the mysql  <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable mysqld
-systemctl start mysqld
+func_print_head "installing the mysql comunity version"
+yum install mysql-community-server -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>>reset  mysql passwd <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql_secure_installation --set-root-pass ${mysql_root_password}
+func_print_head "start and enable mysql"
+systemctl enable mysqld &>>${log_file}
+systemctl restart mysqld &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>>>>>>>>> checking the new passwd is working are not  <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql -uroot -p${mysql_root_password}
+func_print_head "resting the password"
+mysql_secure_installation --set-root-pass ${mysql_root_password} &>>${log_file}
+func_stat_check $?
+
+func_print_head "hecking the new passwd is working are not"
+mysql -uroot -p${mysql_root_password} &>>${log_file}
+func_stat_check $?
