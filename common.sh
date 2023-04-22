@@ -5,18 +5,22 @@ log_file=/tmp/roboshop.log
 #rm -f /tmp/roboshop.log
                               # this functions prints the heading of each command
 func_print_head(){
+
   echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m"
+  echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m" &>>${log_file}
+
 }
 
                           # This command  checks the staus of  each command Success/Failure
 func_stat_check(){
+
         if [ "$1" -eq 0 ]
               then
                 echo -e "\e[32m SUCCESS \e[0m"
-              else
+               else
                 echo -e "\e[31m FAILED \e[0m"
                 echo "please refer the /tmp/roboshop.log for more information"
-                exit 1
+               exit 1
          fi
 }
                                  # This function created to loaad the schema
