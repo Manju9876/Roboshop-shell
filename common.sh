@@ -50,7 +50,7 @@ fi
 func_app_prereq(){
 
     func_print_head "creating a user "
-    useradd ${app_user} >/tmp/roboshop.log
+    useradd ${app_user} &>/tmp/roboshop.log
 
      # calling the function to check the status of the code whether  to check it is runnind succesfuly or not
       func_stat_check $?
