@@ -87,7 +87,7 @@ func_systemd_setup(){
   func_print_head "reloading the schema"
   systemctl daemon-reload &>>${log_file}
 
-  func_print_head "starting and enabling the schema & viewing the status of the service "
+  func_print_head "starting and enabling the schema checking  the status of the service "
   systemctl enable ${component} &>>${log_file}
   systemctl restart ${component} &>>${log_file}
   systemctl status ${component} &>>${log_file}
@@ -156,4 +156,21 @@ func_python(){
 
   func_systemd_setup
 
+}
+
+func_golang(){
+  func_print_head "install golang"
+  yum install golang -y &>>${log_file}
+  func_stat_heck $?
+
+  func_app_prereq
+
+  func_print_head "install golang dependencies"
+  go mod init dispatch &>>${log_file}
+  go get &>>${log_file}
+  go build &>>${log_file}
+
+  func_stat_check $?
+
+  func_systemd_setup
 }
