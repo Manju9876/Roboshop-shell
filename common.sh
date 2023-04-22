@@ -79,7 +79,6 @@ func_app_prereq(){
 }
 
 func_systemd_setup(){
-
   func_print_head "copying the configuration file to systemd"
   cp  ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
   func_stat_check $?
@@ -92,13 +91,6 @@ func_systemd_setup(){
   systemctl restart ${component} &>>${log_file}
   systemctl status ${component} &>>${log_file}
   func_stat_check $?
- if [ "$service_start" == "mongodb" ]
-  then
-    systemctl enable ${component} &>>${log_file}
-      systemctl restart ${component} &>>${log_file}
-      systemctl status ${component} &>>${log_file}
-      func_stat_check $?
- fi
 }
 
                          # This nodejs function is called in "CATALOGU, USER, CART"
