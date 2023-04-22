@@ -5,10 +5,8 @@ log_file=/tmp/roboshop.log
 #rm -f /tmp/roboshop.log
                               # this functions prints the heading of each command
 func_print_head(){
-
   echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m"
   echo -e "\e[31m>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<\e[0m" &>>${log_file}
-
 }
 
                           # This command  checks the staus of  each command Success/Failure
@@ -138,6 +136,24 @@ func_java(){
 
   func_schema_setup
   func_systemd_setup
-  
+
+}
+
+func_python(){
+  func_print_head "installing python 36 version"
+  yum install python36 gcc python3-devel -y &>>${log_file}
+  func_stat_check $?
+
+  func_app_prereq
+
+  func_print_head "installing the dependencies"
+  pip3.6 install -r requirements.txt &>>${log_file}
+  func_stat_check $?
+
+  func_print_head "copying the service file to systemd and updateing the passowrd in service file"
+  sed -i -e "s|rabbitmq_appuser_password|${rabbitmq_appuser_password}|" ${script_path}/payment.service
+  func_stat_check $?
+
+  func_systemd_setup
 
 }
