@@ -7,7 +7,7 @@ yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y  &>>${log
 func_stat_check $?
 
 
-func_print_head "enabling the redis 6.2 versio"
+func_print_head "enabling the redis 6.2 version"
 dnf module enable redis:remi-6.2 -y &>>${log_file}
  func_stat_check $?
 
@@ -24,3 +24,4 @@ systemctl enable redis &>>${log_file}
 systemctl restart redis &>>${log_file}
 systemctl status redis &>>${log_file}
 netstat -lntp &>>${log_file}
+func_stat_check $?
