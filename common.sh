@@ -104,6 +104,12 @@ func_java(){
 
   func_print_head "install maven "
   yum install maven -y
+  if [ "$?" -eq 0 ]
+  then
+    echo -e "\e[32m Instalation Success\e[0m"
+  else
+    echo -e "\e[31m Installation Failure\e[0m"
+  fi
 
    # calling a function  func_app_prereq
  func_app_prereq
@@ -111,6 +117,12 @@ func_java(){
 
    func_print_head "downloading the dependincies"
      mvn clean package
+       if [ "$?" -eq 0 ]
+            then
+              echo -e "\e[32m Instalation Success\e[0m"
+            else
+              echo -e "\e[31m Installation Failure\e[0m"
+       fi
      mv target/${component}-1.0.jar ${component}.jar
 
    # callinf the schema setup function
