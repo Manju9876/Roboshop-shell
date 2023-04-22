@@ -23,5 +23,4 @@ func_print_head "start service and checking the status of service and connectivi
 systemctl enable redis &>>${log_file}
 systemctl restart redis &>>${log_file}
 systemctl status redis &>>${log_file}
-netstat -lntp &>>${log_file}
 func_stat_check $?
