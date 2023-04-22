@@ -9,4 +9,4 @@ then
   exit
 fi
 component="payment"
-func_pyhton
+func_python
