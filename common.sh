@@ -92,7 +92,12 @@ func_systemd_setup(){
   systemctl restart ${component} &>>${log_file}
   systemctl status ${component} &>>${log_file}
   func_stat_check $?
-
+ if [ "$service_start" == "mongodb" ]
+  then
+    systemctl enable ${component} &>>${log_file}
+      systemctl restart ${component} &>>${log_file}
+      systemctl status ${component} &>>${log_file}
+ fi
 }
 
                          # This nodejs function is called in "CATALOGU, USER, CART"

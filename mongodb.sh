@@ -2,23 +2,19 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
+component="mongod"
+service_start="mongodb"
 
-echo -e "\e[35m >>>>>>>>>>>>>>>installing mongodb<<<<<<<<<<<<<<<\e[om"
-echo -e "\e[31m >>>>>>>>>>>>>>>>>copying the repo file <<<<<<<<<<<<<<<<<<<<\e[0m"
-cp  ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+ func_print_head "copying the repo file of mongodb to yum.repos.d "
+   cp  ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+   func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>install mongodb-org <<<<<<<<<<<<<<<<<<<<\e[0m"
-yum install mongodb-org -y
+ func_print_head " downloading repo file and installing mongodb"
+   cp  ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+   yum install mongodb-org -y  &>>${log_file}
+   func_stat_check $?
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>starting and enabling the service<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable mongod
-systemctl start mongod
+func_print_head "updating the mongod.conf file to 0.0.0.0"
+   sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf &>>${log_file}
 
-echo -e "\e[31m >>>>>>>>>>>>>>>>>replacing the ip address in the mongof.conf file <<<<<<<<<<<<<<<<<<<<\e[0m"
-sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
-
-echo -e "\e[31m >>>>>>>>>>>>>>>>>restarting the service <<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl restart mongod
-
-echo -e "\e[31m >>>>>>>>>>>>>>>>>checking the status of mongod<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl status mongod
+   service_start
