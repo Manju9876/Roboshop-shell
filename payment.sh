@@ -5,7 +5,7 @@ rabbitmq_appuser_password=$1
 
 if [ -z "$rabbitmq_appuser_password" ]
 then
-  echo input missing for app user password fo rabbitmq
+  echo -e "\e[36m please enter the rabbitmq appuser password\e[0m"
   exit
 fi
 component="payment"
