@@ -11,7 +11,6 @@ func_print_head(){
 
                           # This command  checks the staus of  each command Success/Failure
 func_stat_check(){
-
         if [ "$1" -eq 0 ]
               then
                 echo -e "\e[32m SUCCESS \e[0m"
@@ -53,7 +52,6 @@ fi
              # This function is creeated to the prerequisite of all all common components
 
 func_app_prereq(){
-
     func_print_head "creating a user "
      id ${app_user} &>>${log_file}
      if [ $? -ne 0 ]
@@ -75,7 +73,6 @@ func_app_prereq(){
      cd /app
      unzip /tmp/${component}.zip &>>${log_file}
      func_stat_check $?
-
 }
 
 func_systemd_setup(){
@@ -97,20 +94,19 @@ func_systemd_setup(){
                          # This nodejs function is called in "CATALOGU, USER, CART"
 
 func_nodejs() {
+  func_print_head "Downloading the nodejs js repo file"
+    curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+    func_stat_check $?
 
- func_print_head "Downloading the nodejs js repo file"
- curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
- func_stat_check $?
+  func_print_head "Install NodeJS"
+    yum install nodejs -y &>>${log_file}
+    func_stat_check $?
 
- func_print_head "Install NodeJS"
- yum install nodejs -y &>>${log_file}
- func_stat_check $?
+   func_app_prereq
 
- func_app_prereq
-
- func_print_head "installing the dependencies"
- npm install &>>${log_file}
- func_stat_check $?
+  func_print_head "installing the dependencies"
+    npm install &>>${log_file}
+    func_stat_check $?
 
  func_schema_setup
  func_systemd_setup
