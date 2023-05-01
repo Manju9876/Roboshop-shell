@@ -2,6 +2,7 @@ app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 log_file=/tmp/roboshop.log
+
 #rm -f /tmp/roboshop.log
                               # this functions prints the heading of each command
 func_print_head(){
