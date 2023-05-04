@@ -6,7 +6,7 @@ rabbitmq_appuser_password=$1
 if [ -z "$rabbitmq_appuser_password" ]
 then
   echo -e "\e[36m please enter the rabbitmq appuser password\e[0m"
-  exit
+  exit 1
 fi
 component="payment"
 func_python

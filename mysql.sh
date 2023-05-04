@@ -6,7 +6,7 @@ mysql_root_password=$1
 if [ -z "$mysql_root_password" ]
 then
   echo  -e "\e[36m please enter the root password \e[0m"
-  exit
+  exit 1
 fi
 
 func_print_head "disabling the default mysql version"
